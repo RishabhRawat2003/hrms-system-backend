@@ -17,7 +17,6 @@ export async function addNewCandidateHandlerV2(input) {
     if (!data.full_name || !data.email || !data.phone_number || !data.position || !data.experience) {
         throw 'All fields are required';
     }
-    console.log(file, "file")
 
     let resume_url = await uploadOnCloudinary(file.path)
 
@@ -27,7 +26,7 @@ export async function addNewCandidateHandlerV2(input) {
 
     const newData = {
         ...data,
-        resume_url
+        resume_url: resume_url.secure_url
     }
 
     return await candidateHelper.addObject(newData);
@@ -39,8 +38,7 @@ export async function getCandidateDetailsHandler(input) {
 
 export async function updateCandidateDetailsHandler(input) {
     if (input.updateObject.status === SELECTED) {
-        const candidate = await candidateHelper.getObjectById(input.objectId);
-
+        const candidate = await candidateHelper.getObjectById({ id: input.objectId });
         const data = {
             full_name: candidate.full_name,
             email: candidate.email,

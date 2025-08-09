@@ -8,6 +8,10 @@ import chalk from "./chalk";
 import cors from 'cors';
 
 import mainRoutes from './routes/main.routes.js';
+import candidateRoutes from './routes/candidate.routes.js';
+import employeeRoutes from './routes/employee.routes.js';
+import otpRoutes from './routes/otp.routes.js';
+import hrRoutes from './routes/hr.routes.js';
 
 import config from './config.js';
 import http from 'http';
@@ -74,6 +78,12 @@ app.use((req, res, next) => {
 
 // Routes
 app.use('/', mainRoutes);
+app.use('/api/v1/candidate', candidateRoutes);
+app.use('/api/v1/employee', employeeRoutes);
+app.use('/api/v1/otp', otpRoutes);
+app.use('/api/v1/hr', hrRoutes);
+
+
 server.listen(config.PORT, (error) => {
   console.log(process.env.NODE_ENV);
   console.log(`Core API is running on port: ${config.PORT}!`);

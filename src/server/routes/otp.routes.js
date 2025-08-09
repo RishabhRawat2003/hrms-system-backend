@@ -11,7 +11,7 @@ import {
 } from '../../common/lib/otp/otpHandler';
 import responseStatus from "../../common/constants/responseStatus.json";
 import responseData from "../../common/constants/responseData.json";
-import { sendVerificationEmail } from '../../common/util/utilHelper';
+import { sendVerificationEmail, verifyEmailOTP } from '../../common/util/utilHelper';
 import hrHelper from '../../common/helpers/hr.helper';
 
 const router = new Router();

@@ -13,6 +13,7 @@ import {
 import responseStatus from "../../common/constants/responseStatus.json";
 import responseData from "../../common/constants/responseData.json";
 import { upload } from '../../common/util/upload';
+import protectRoutes from '../../common/util/protectRoutes';
 
 const router = new Router();
 
@@ -80,7 +81,7 @@ router.route('/new').post(async (req, res) => {
     }
 });
 
-router.route('/add-candidate').post(upload.single('file'), async (req, res) => {
+router.route('/add-candidate').post(protectRoutes.authenticateToken, upload.single('file'), async (req, res) => {
     try {
         if (!_.isEmpty(req.body)) {
             const input = {
@@ -134,7 +135,7 @@ router.route('/:id').get(async (req, res) => {
 
 router.route('/:id/update').post(async (req, res) => {
     try {
-        if (!_.isEmpty(req.params.id) && !_.isEmpty(req.body) && !_.isEmpty(req.body.candidate)) {
+        if (!_.isEmpty(req.params.id) && !_.isEmpty(req.body)) {
             let input = {
                 objectId: req.params.id,
                 updateObject: req.body
