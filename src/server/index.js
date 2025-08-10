@@ -40,6 +40,7 @@ const allowedOrigins = [
   "http://localhost:5174",
   "http://localhost:5175",
   "https://hrms-system-frontend.vercel.app",
+  "https://hrms-system-backend.vercel.app"
 ];
 
 app.use(
