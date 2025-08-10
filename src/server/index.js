@@ -12,6 +12,8 @@ import candidateRoutes from './routes/candidate.routes.js';
 import employeeRoutes from './routes/employee.routes.js';
 import otpRoutes from './routes/otp.routes.js';
 import hrRoutes from './routes/hr.routes.js';
+import attendanceRoutes from './routes/attendance.routes.js';
+import leaveRoutes from './routes/leave.routes.js';
 
 import config from './config.js';
 import http from 'http';
@@ -37,6 +39,7 @@ const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:5174",
   "http://localhost:5175",
+  "https://hrms-system-frontend.vercel.app",
 ];
 
 app.use(
@@ -82,7 +85,8 @@ app.use('/api/v1/candidate', candidateRoutes);
 app.use('/api/v1/employee', employeeRoutes);
 app.use('/api/v1/otp', otpRoutes);
 app.use('/api/v1/hr', hrRoutes);
-
+app.use('/api/v1/attendance', attendanceRoutes);
+app.use('/api/v1/leave', leaveRoutes);
 
 server.listen(config.PORT, (error) => {
   console.log(process.env.NODE_ENV);

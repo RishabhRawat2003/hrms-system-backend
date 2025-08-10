@@ -17,7 +17,7 @@ import protectRoutes from '../../common/util/protectRoutes';
 
 const router = new Router();
 
-router.route('/list').post(async (req, res) => {
+router.route('/list').post(protectRoutes.authenticateToken, async (req, res) => {
     try {
         let filter = {};
         filter.query = {};
@@ -133,7 +133,7 @@ router.route('/:id').get(async (req, res) => {
     }
 });
 
-router.route('/:id/update').post(async (req, res) => {
+router.route('/:id/update').post(protectRoutes.authenticateToken ,async (req, res) => {
     try {
         if (!_.isEmpty(req.params.id) && !_.isEmpty(req.body)) {
             let input = {

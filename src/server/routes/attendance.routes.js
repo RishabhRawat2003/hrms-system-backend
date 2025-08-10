@@ -3,12 +3,12 @@ import _ from 'lodash';
 import { Router } from 'express';
 
 import {
-    addNewEmployeeHandler,
-    deleteEmployeeHandler,
-    getEmployeeDetailsHandler,
-    getEmployeeListHandler,
-    updateEmployeeDetailsHandler
-} from '../../common/lib/employee/employeeHandler';
+    addNewAttendanceHandler,
+    deleteAttendanceHandler,
+    getAttendanceDetailsHandler,
+    getAttendanceListHandler,
+    updateAttendanceDetailsHandler
+} from '../../common/lib/attendance/attendanceHandler';
 import responseStatus from "../../common/constants/responseStatus.json";
 import responseData from "../../common/constants/responseData.json";
 import protectRoutes from '../../common/util/protectRoutes';
@@ -35,13 +35,13 @@ router.route('/list').post(protectRoutes.authenticateToken, async (req, res) => 
 
         filter.query = { ...filter.query };
 
-        const outputResult = await getEmployeeListHandler(filter);
+        const outputResult = await getAttendanceListHandler(filter);
         res.status(responseStatus.STATUS_SUCCESS_OK);
         res.send({
             status: responseData.SUCCESS,
             data: {
-                employeeList: outputResult.list ? outputResult.list : [],
-                employeeCount: outputResult.count ? outputResult.count : 0,
+                attendanceList: outputResult.list ? outputResult.list : [],
+                attendanceCount: outputResult.count ? outputResult.count : 0,
             },
         });
     } catch (err) {
@@ -58,12 +58,12 @@ router.route('/list').post(protectRoutes.authenticateToken, async (req, res) => 
 router.route('/new').post(async (req, res) => {
     try {
         if (!_.isEmpty(req.body)) {
-            const outputResult = await addNewEmployeeHandler(req.body.employee);
+            const outputResult = await addNewAttendanceHandler(req.body.attendance);
             res.status(responseStatus.STATUS_SUCCESS_OK);
             res.send({
                 status: responseData.SUCCESS,
                 data: {
-                    employee: outputResult ? outputResult : {}
+                    attendance: outputResult ? outputResult : {}
                 }
             });
         } else {
@@ -82,12 +82,12 @@ router.route('/new').post(async (req, res) => {
 router.route('/:id').get(async (req, res) => {
     try {
         if (req.params.id) {
-            const gotEmployee = await getEmployeeDetailsHandler(req.params);
+            const gotAttendance = await getAttendanceDetailsHandler(req.params);
             res.status(responseStatus.STATUS_SUCCESS_OK);
             res.send({
                 status: responseData.SUCCESS,
                 data: {
-                    employee: gotEmployee ? gotEmployee : {}
+                    attendance: gotAttendance ? gotAttendance : {}
                 }
             });
         } else {
@@ -105,17 +105,17 @@ router.route('/:id').get(async (req, res) => {
 
 router.route('/:id/update').post(protectRoutes.authenticateToken, async (req, res) => {
     try {
-        if (!_.isEmpty(req.params.id) && !_.isEmpty(req.body) && !_.isEmpty(req.body)) {
+        if (!_.isEmpty(req.params.id) && !_.isEmpty(req.body)) {
             let input = {
                 objectId: req.params.id,
                 updateObject: req.body
             }
-            const updateObjectResult = await updateEmployeeDetailsHandler(input);
+            const updateObjectResult = await updateAttendanceDetailsHandler(input);
             res.status(responseStatus.STATUS_SUCCESS_OK);
             res.send({
                 status: responseData.SUCCESS,
                 data: {
-                    employee: updateObjectResult ? updateObjectResult : {}
+                    attendance: updateObjectResult ? updateObjectResult : {}
                 }
             });
         } else {
@@ -134,12 +134,12 @@ router.route('/:id/update').post(protectRoutes.authenticateToken, async (req, re
 router.route('/:id/remove').post(async (req, res) => {
     try {
         if (req.params.id) {
-            const deletedEmployee = await deleteEmployeeHandler(req.params.id);
+            const deletedAttendance = await deleteAttendanceHandler(req.params.id);
             res.status(responseStatus.STATUS_SUCCESS_OK);
             res.send({
                 status: responseData.SUCCESS,
                 data: {
-                    hasEmployeeDeleted: true
+                    hasAttendanceDeleted: true
                 }
             });
         } else {
